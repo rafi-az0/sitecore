@@ -1,13 +1,13 @@
-import { Component, useState, useMemo, createContext, useContext } from "react";
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import { AppShell } from "./components/layout/AppShell";
-import { FeedPage } from "./pages/FeedPage";
-import { PostPage } from "./pages/PostPage";
-import { NotFoundPage } from "./pages/NotFoundPage";
-import { UploadModal } from "./components/upload/UploadModal";
-import { useFeed } from "./hooks/useFeed";
-import { FeedContext } from "./hooks/FeedContext";
+import { Component, createContext, useContext, useMemo, useState } from "react";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import type { Post } from "./api/types";
+import { AppShell } from "./components/layout/AppShell";
+import { UploadModal } from "./components/upload/UploadModal";
+import { FeedContext } from "./hooks/FeedContext";
+import { useFeed } from "./hooks/useFeed";
+import { FeedPage } from "./pages/FeedPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { PostPage } from "./pages/PostPage";
 
 // Bridges upload-open state from AppContent into the stable router tree
 const UploadContext = createContext<{ open: () => void }>({ open: () => {} });

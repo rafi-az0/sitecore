@@ -1,4 +1,3 @@
-import { useMemo, useState } from "react";
 import { FeedGrid } from "../components/feed/FeedGrid";
 import { PageContainer } from "../components/layout/PageContainer";
 import { EmptyState } from "../components/ui/EmptyState";
@@ -6,25 +5,12 @@ import { ErrorBanner } from "../components/ui/ErrorBanner";
 import { useFeedContext } from "../hooks/FeedContext";
 import { cn } from "../utils/cn";
 import { getErrorMessage } from "../utils/errorMessages";
-
-type SortOrder = "newest" | "oldest";
+import type { SortOrder } from "../hooks/useFeed";
 
 export function FeedPage() {
-  const { posts, isLoading, isInitialLoad, hasMore, error, loadMore, retry } = useFeedContext();
-  const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
+  const { posts, isLoading, isInitialLoad, hasMore, error, sortOrder, loadMore, setSortOrder, retry } =
+    useFeedContext();
 
-  const sortedPosts = useMemo(() => {
-    if (sortOrder === "oldest") {
-      return [...posts].sort(
-        (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
-      );
-    }
-    return [...posts].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    );
-  }, [posts, sortOrder]);
-
-  // Full-page error on initial load failure
   if (!!error && isInitialLoad) {
     return (
       <PageContainer className="flex flex-col items-center justify-center min-h-[60vh]">
@@ -61,9 +47,8 @@ export function FeedPage() {
           ))}
         </div>
       </div>
-
       <FeedGrid
-        posts={sortedPosts}
+        posts={posts}
         isLoading={isLoading}
         isInitialLoad={isInitialLoad}
         hasMore={hasMore}

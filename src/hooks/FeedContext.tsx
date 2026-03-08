@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import type { Post } from "../api/types";
+import type { SortOrder } from "./useFeed";
 
 interface FeedContextValue {
   posts: Post[];
@@ -7,8 +8,10 @@ interface FeedContextValue {
   isInitialLoad: boolean;
   hasMore: boolean;
   error: unknown;
+  sortOrder: SortOrder;
   loadMore: () => void;
   onPostCreated: (post: Post) => void;
+  setSortOrder: (order: SortOrder) => void;
   retry: () => void;
 }
 
